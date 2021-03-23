@@ -87,7 +87,7 @@ def parse_ionic_radii():
 
         ionic_radii = {}
         for j in range(3, len(toks)):
-            m = re.match(r"^\s*([0-9\.]+)", toks[j])
+            m = re.match(r"^\s*([0-9.]+)", toks[j])
             if m:
                 ionic_radii[int(header[j])] = float(m.group(1))
 
