@@ -90,7 +90,7 @@
 <span class="sd">        filename: name of nwchem files read by NWCHEM2FIESTA (filename.nw, filename.nwout and filename.movecs)</span>
 <span class="sd">        logfile: logfile of NWCHEM2FIESTA</span>
 
-<span class="sd">        the run method launchs NWCHEM2FIESTA</span>
+<span class="sd">        the run method launches NWCHEM2FIESTA</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -430,7 +430,7 @@
 
 <div class="viewcode-block" id="FiestaInput.dump_TDDFT_data_in_GW_run"><a class="viewcode-back" href="../../../pymatgen.io.fiesta.html#pymatgen.io.fiesta.FiestaInput.dump_TDDFT_data_in_GW_run">[docs]</a>    <span class="k">def</span> <span class="nf">dump_TDDFT_data_in_GW_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">TDDFT_dump</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param TDDFT_dump: boolen</span>
+<span class="sd">        :param TDDFT_dump: boolean</span>
 <span class="sd">        :return: set the do_tddft variable to one in cell.in</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">TDDFT_dump</span><span class="p">:</span>
@@ -537,7 +537,7 @@
 <span class="s2">    $nit_gw</span>
 <span class="s2"># dumping for BSE and TDDFT</span>
 <span class="s2">    $do_bse    $do_tddft</span>
-<span class="s2"># number of occp. and virtual bands fo BSE: nocore and up to 40 eVs</span>
+<span class="s2"># number of occp. and virtual bands for BSE: nocore and up to 40 eVs</span>
 <span class="s2">    $nv_bse   $nc_bse</span>
 <span class="s2"># number of excitations needed and number of iterations</span>
 <span class="s2">    $npsi_bse   $nit_bse</span>
@@ -691,7 +691,7 @@
         <span class="n">toks</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">BSE_TDDFT_options</span><span class="p">[</span><span class="s1">&#39;do_bse&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">BSE_TDDFT_options</span><span class="p">[</span><span class="s1">&#39;do_tddft&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toks</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="c1"># number of occp. and virtual bands fo BSE: nocore and up to 40 eVs</span>
+        <span class="c1"># number of occp. and virtual bands for BSE: nocore and up to 40 eVs</span>
         <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">l</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">toks</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
