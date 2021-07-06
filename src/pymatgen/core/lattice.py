@@ -1990,7 +1990,7 @@ def find_neighbors(label: np.ndarray, nx: int, ny: int, nz: int) -> list[np.ndar
     """Given a cube index, find the neighbor cube indices.
 
     Args:
-        label: (array) (n,) or (n x 3) indice array
+        label: (array) (n,) or (n x 3) indices array
         nx: (int) number of cells in y direction
         ny: (int) number of cells in y direction
         nz: (int) number of cells in z direction

@@ -486,7 +486,7 @@ def get_gs_ph_bs_symm_line_from_dict(
         labels_dict (dict): dict that links a qpoint in frac coords to a label.
             Its value will replace the data contained in the band.yaml.
         fit (bool): Substitute Grueneisen parameters close to the gamma point
-            with points obtained from a fit to a spline if the derivate from
+            with points obtained from a fit to a spline if the derivative from
             a smooth curve (i.e. if the slope changes by more than 200% in the
             range of 10% around the gamma point).
             These derivations occur because of very small frequencies

@@ -68,7 +68,7 @@ class QCOutput(MSONable):
         if self.data.get("multiple_outputs") is not None and self.data.get("multiple_outputs") != [["1"]]:
             raise ValueError(
                 f"ERROR: multiple calculation outputs found in file {filename}. "
-                f"Please instead call QCOutput.mulitple_outputs_from_file(QCOutput, {filename!r})"
+                f"Please instead call QCOutput.multiple_outputs_from_file(QCOutput, {filename!r})"
             )
 
         # Parse the Q-Chem major version
