@@ -798,7 +798,7 @@ class BztTransportProperties:
         Calculate all the properties w.r.t. the doping levels in input.
 
         Args:
-            doping: numpy array specifing the doping levels
+            doping: numpy array specifying the doping levels
 
         When executed, it add the following variable at the BztTransportProperties
         object:

@@ -1030,7 +1030,7 @@ class CifParser:
                     # moments as Species 'spin' property, instead of site
                     # property, but this introduces ambiguities for end user
                     # (such as unintended use of `spin` and Species will have
-                    # fictious oxidation state).
+                    # fictitious oxidation state).
                     raise NotImplementedError("Disordered magnetic structures not currently supported.")
 
         if coord_to_species.items():

@@ -449,7 +449,7 @@ End AUTO--2017/8/31, 13:43:18.378
 
 * WRITE cml file: ../table.cml
 
-CRITIC2 ended succesfully (0 WARNINGS, 0 COMMENTS)
+CRITIC2 ended successfully (0 WARNINGS, 0 COMMENTS)
 
 Elapsed wall time: 0s
 Elapsed CPU time: 0s

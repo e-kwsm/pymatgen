@@ -383,7 +383,7 @@ class AbstractChemenvStrategy(MSONable, metaclass=abc.ABCMeta):
         """
         Applies the strategy to the structure_environments object in order to get coordination environments, their
         fraction, csm, geometry_info, and neighbors
-        :param site: Site for which the above information is seeked
+        :param site: Site for which the above information is sought
         :return: The list of neighbors of the site. For complex strategies, where one allows multiple solutions, this
         can return a list of list of neighbors
         """

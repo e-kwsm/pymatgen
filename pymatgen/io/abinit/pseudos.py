@@ -1080,7 +1080,7 @@ class PseudoParser:
     #                4: {'n': 11, 'name': 'PBE'}}
 
     def __init__(self):
-        # List of files that have been parsed succesfully.
+        # List of files that have been parsed successfully.
         self._parsed_paths = []
 
         # List of files that could not been parsed.
@@ -1397,7 +1397,7 @@ class PawXmlSetup(Pseudo, PawPseudo):
         return np.array(mesh)
 
     def _parse_radfunc(self, func_name):
-        """Parse the first occurence of func_name in the XML file."""
+        """Parse the first occurrence of func_name in the XML file."""
         # pylint: disable=E1101
         node = self.root.find(func_name)
         grid = node.attrib["grid"]
@@ -1803,7 +1803,7 @@ class PseudoTable(collections.abc.Sequence, MSONable, metaclass=abc.ABCMeta):
                 if multiple occurrences are found. Use allow_multi to prevent this.
 
         Raises:
-            ValueError if symbol is not found or multiple occurences are present and not allow_multi
+            ValueError if symbol is not found or multiple occurrences are present and not allow_multi
         """
         pseudos = self.select_symbols(symbol, ret_list=True)
         if not pseudos or (len(pseudos) > 1 and not allow_multi):
@@ -1818,7 +1818,7 @@ class PseudoTable(collections.abc.Sequence, MSONable, metaclass=abc.ABCMeta):
         Return the pseudos with the given chemical symbols.
 
         Raises:
-            ValueError if one of the symbols is not found or multiple occurences are present.
+            ValueError if one of the symbols is not found or multiple occurrences are present.
         """
         pseudos = self.select_symbols(symbols, ret_list=True)
         found_symbols = [p.symbol for p in pseudos]
@@ -1875,7 +1875,7 @@ class PseudoTable(collections.abc.Sequence, MSONable, metaclass=abc.ABCMeta):
 
         Raises:
             `ValueError` if one of the chemical symbols is not found or
-            multiple occurences are present in the table.
+            multiple occurrences are present in the table.
         """
         return self.pseudos_with_symbols(structure.symbol_set)
 

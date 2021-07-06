@@ -223,7 +223,7 @@ class TransformedPDEntry(PDEntry):
         Returns:
             Composition
         """
-        # NOTE this is not infallable as the original entry is mutable and an
+        # NOTE this is not infallible as the original entry is mutable and an
         # end user could choose to normalize or change the original entry.
         # However, the risk of this seems low.
         factor = self._composition.num_atoms / self.original_entry.composition.num_atoms
@@ -654,13 +654,13 @@ class BasePhaseDiagram(MSONable):
                 before calculating a second convex hull to reducing the complexity
                 of the optimization.
             stable_only (bool): Only use stable materials as competing entries.
-            tol (float): The tolerence for convergence of the SLSQP optimization
+            tol (float): The tolerance for convergence of the SLSQP optimization
                 when finding the equilibrium reaction.
             maxiter (int): The maximum number of iterations of the SLSQP optimizer
                 when finding the equilibrium reaction.
 
         Returns:
-            (decomp, energy). The decompostion  is given as a dict of {PDEntry, amount}
+            (decomp, energy). The decomposition  is given as a dict of {PDEntry, amount}
             for all entries in the decomp reaction where amount is the amount of the
             fractional composition. The phase separation energy is given per atom.
         """
@@ -728,7 +728,7 @@ class BasePhaseDiagram(MSONable):
         """
         Provides the energy to the convex hull for the given entry. For stable entries
         already in the phase diagram the algorithm provides the phase separation energy
-        which is refered to as the decomposition enthalpy in:
+        which is referred to as the decomposition enthalpy in:
 
         1. Bartel, C., Trewartha, A., Wang, Q., Dunn, A., Jain, A., Ceder, G.,
             A critical examination of compound stability predictions from
@@ -739,7 +739,7 @@ class BasePhaseDiagram(MSONable):
             **kwargs: Keyword args passed to `get_decomp_and_decomp_energy`
                 space_limit (int): The maximum number of competing entries to consider.
                 stable_only (bool): Only use stable materials as competing entries
-                tol (float): The tolerence for convergence of the SLSQP optimization
+                tol (float): The tolerance for convergence of the SLSQP optimization
                     when finding the equilibrium reaction.
                 maxiter (int): The maximum number of iterations of the SLSQP optimizer
                     when finding the equilibrium reaction.
@@ -748,7 +748,7 @@ class BasePhaseDiagram(MSONable):
             phase separation energy per atom of entry. Stable entries should have
             energies <= 0, Stable elemental entries should have energies = 0 and
             unstable entries should have energies > 0. Entries that have the same
-            composition as a stable energy may have postive or negative phase
+            composition as a stable energy may have positive or negative phase
             separation energies depending on their own energy.
         """
         return self.get_decomp_and_phase_separation_energy(entry, **kwargs)[1]
@@ -1554,7 +1554,7 @@ def _get_slsqp_decomp(comp, competing_entries, tol=1e-10, maxiter=1000):
         competing_entries ([PDEntry]): List of entries to consider for decomposition
 
     Returns:
-        scipy.optimize.minimize result. If sucessful this gives the linear combination of
+        scipy.optimize.minimize result. If successful this gives the linear combination of
             competing entrys that minimizes the competing formation energy
     """
     if not isinstance(comp, Composition):
@@ -1587,7 +1587,7 @@ def _get_slsqp_decomp(comp, competing_entries, tol=1e-10, maxiter=1000):
     bounds = [(0, max_bound)] * len(competing_entries)
     x0 = [1 / len(competing_entries)] * len(competing_entries)
 
-    # NOTE the tolerence needs to be tight to stop the optimization
+    # NOTE the tolerance needs to be tight to stop the optimization
     # from exiting before convergence is reached. Issues observed for
     # tol > 1e-7 in the fractional composition (default 1e-10).
     solution = minimize(
@@ -2107,7 +2107,7 @@ class PDPlotter:
             image_format
                 format for image. Can be any of matplotlib supported formats.
                 Defaults to svg for best results for vector graphics.
-            **kwargs: Pass through to get_plot functino.
+            **kwargs: Pass through to get_plot function.
         """
         plt = self.get_plot(**kwargs)
 

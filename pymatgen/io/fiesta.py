@@ -43,7 +43,7 @@ class Nwchem2Fiesta(MSONable):
         filename: name of nwchem files read by NWCHEM2FIESTA (filename.nw, filename.nwout and filename.movecs)
         logfile: logfile of NWCHEM2FIESTA
 
-        the run method launchs NWCHEM2FIESTA
+        the run method launches NWCHEM2FIESTA
 
         """
 

@@ -1160,7 +1160,7 @@ class RelaxationMethod(AbivarAble, MSONable):
 
 
 class PPModelModes(Enum):
-    """Differnt kind of plasmon-pole models."""
+    """Different kind of plasmon-pole models."""
 
     noppmodel = 0
     godby = 1

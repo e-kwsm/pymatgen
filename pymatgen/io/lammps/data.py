@@ -1269,7 +1269,7 @@ class ForceField(MSONable):
 class CombinedData(LammpsData):
     """
     Object for a collective set of data for a series of LAMMPS data file.
-    velocities not yet implementd.
+    velocities not yet implemented.
     """
 
     def __init__(

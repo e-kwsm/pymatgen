@@ -740,7 +740,7 @@ class DictSet(VaspInputSet):
 
     def calculate_ng(self, max_prime_factor: int = 7, must_inc_2: bool = True) -> Tuple:
         """
-        Calculates the NGX, NGY, and NGZ values using the information availible in the INCAR and POTCAR
+        Calculates the NGX, NGY, and NGZ values using the information available in the INCAR and POTCAR
         This is meant to help with making initial guess for the FFT grid so we can interact with the Charge density API
 
         Args:

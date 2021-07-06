@@ -998,7 +998,7 @@ class Composition(collections.abc.Hashable, collections.abc.Mapping, MSONable, S
         Returns:
             A list of tuples, with the first element being a Composition and
             the second element being the number of points awarded that
-            Composition intepretation.
+            Composition interpretation.
         """
         m_dict = m_dict or {}
 

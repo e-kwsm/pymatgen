@@ -450,7 +450,7 @@ class VasprunTest(PymatgenTest):
                 with self.assertRaises(VaspParserError):
                     _ = vasprun.get_band_structure(line_mode=True)
 
-                # Check KPOINTS.gz succesfully inferred and used if present
+                # Check KPOINTS.gz successfully inferred and used if present
                 with open(self.TEST_FILES_DIR / "KPOINTS_Si_bands", "rb") as f_in:
                     with gzip.open("KPOINTS.gz", "wb") as f_out:
                         copyfileobj(f_in, f_out)

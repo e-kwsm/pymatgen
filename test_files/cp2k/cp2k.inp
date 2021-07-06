@@ -293,7 +293,7 @@
 			! to find minimum. Disadvantages: Sensitive to
 			! preconditioning. A good preconditioner can be
 			! expensive. No smearing, or advanced SCF
-			! mixing possible: POOR convergence for metalic
+			! mixing possible: POOR convergence for metallic
 			! systems.
 			&OT 
 				MINIMIZER DIIS

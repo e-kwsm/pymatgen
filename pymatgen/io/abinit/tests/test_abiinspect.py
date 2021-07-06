@@ -85,7 +85,7 @@ attacks: [BITE, HURT]
             # print(all_docs)
             self.assertTrue(len(all_docs) == 3)
 
-            # We should be at the begining at the file.
+            # We should be at the beginning at the file.
             self.assertTrue(all_docs == r.all_yaml_docs())
 
             # Find documents by tag.

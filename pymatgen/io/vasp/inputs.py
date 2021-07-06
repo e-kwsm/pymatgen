@@ -950,9 +950,9 @@ class Incar(dict, MSONable):
 
     def check_params(self):
         """
-        Raises a warning for nonsensical or non-existant INCAR tags and
+        Raises a warning for nonsensical or non-existent INCAR tags and
         parameters. If a keyword doesn't exist (e.g. theres a typo in a
-        keyword), your calculation will still run, however VASP will igore the
+        keyword), your calculation will still run, however VASP will ignore the
         parameter without letting you know, hence why we have this Incar method.
         """
         for k, v in self.items():
@@ -1017,7 +1017,7 @@ class Kpoints_supported_modes(Enum):
         for m in Kpoints_supported_modes:
             if m.name.lower()[0] == c:
                 return m
-        raise ValueError("Can't interprete Kpoint mode %s" % s)
+        raise ValueError("Can't interpret Kpoint mode %s" % s)
 
 
 class Kpoints(MSONable):
@@ -1308,7 +1308,7 @@ class Kpoints(MSONable):
 
         Args:
             divisions: Parameter determining the number of k-points along each
-                hight symetry lines.
+                hight symmetry lines.
             ibz: HighSymmKpath object (pymatgen.symmetry.bandstructure)
 
         Returns:
@@ -1693,7 +1693,7 @@ class PotcarSingle:
         self.header = data.split("\n")[0].strip()
 
         search_lines = re.search(
-            r"(?s)(parameters from PSCTR are:" r".*?END of PSCTR-controll parameters)",
+            r"(?s)(parameters from PSCTR are:" r".*?END of PSCTR-control parameters)",
             data,
         ).group(1)
 
@@ -1752,7 +1752,7 @@ class PotcarSingle:
             PSCTR["OrbitalDescriptions"] = tuple(descriptions)
 
         rrkj_kinetic_energy_string = re.search(
-            r"(?s)Error from kinetic energy argument \(eV\)\s*\n" r"(.*?)END of PSCTR-controll parameters",
+            r"(?s)Error from kinetic energy argument \(eV\)\s*\n" r"(.*?)END of PSCTR-control parameters",
             search_lines,
         )
         rrkj_array = []

@@ -924,7 +924,7 @@ class PointGroupAnalyzer:
 
     def _proc_asym_top(self):
         """
-        Handles assymetric top molecules, which cannot contain rotational
+        Handles asymmetric top molecules, which cannot contain rotational
         symmetry larger than 2.
         """
         self._check_R2_axes_asym()
@@ -940,7 +940,7 @@ class PointGroupAnalyzer:
 
     def _proc_sym_top(self):
         """
-        Handles symetric top molecules which has one unique eigenvalue whose
+        Handles symmetric top molecules which has one unique eigenvalue whose
         corresponding principal axis is a unique rotational axis.  More complex
         handling required to look for R2 axes perpendicular to this unique
         axis.

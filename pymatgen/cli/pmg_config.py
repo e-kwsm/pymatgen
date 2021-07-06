@@ -80,7 +80,7 @@ def setup_potcars(args):
                     with subprocess.Popen(["gzip", "-f", dest]) as p:
                         p.communicate()
                 except Exception as ex:
-                    print("An error has occured. Message is %s. Trying to " "continue... " % str(ex))
+                    print("An error has occurred. Message is %s. Trying to " "continue... " % str(ex))
 
     print("")
     print(

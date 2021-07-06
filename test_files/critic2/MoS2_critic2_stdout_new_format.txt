@@ -496,7 +496,7 @@ x 14     6    c  0.66666252   0.33333884   0.21329445   1   0.0   0.0   0.0
 
 End AUTO--2019/11/14, 16:34:45.182
 
-CRITIC2 ended succesfully (0 WARNINGS, 0 COMMENTS)
+CRITIC2 ended successfully (0 WARNINGS, 0 COMMENTS)
 
 Elapsed wall time: 0s
 Elapsed CPU time: 0s

@@ -549,7 +549,7 @@ class KumagaiCorrection(DefectCorrection):
         """
         For performing potential alignment in manner described by Kumagai et al.
         Args:
-            defect_structure: Pymatgen Structure object corrsponding to the defect supercell
+            defect_structure: Pymatgen Structure object corresponding to the defect supercell
 
             defect_frac_coords (array): Defect Position in fractional coordinates of the supercell
                 given in bulk_structure

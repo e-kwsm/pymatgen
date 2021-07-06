@@ -47,7 +47,7 @@ class AbinitTimerParser(collections.abc.Iterable):
         parser = AbinitTimerParser()
         parser.parse(list_of_files)
 
-    To analyze all *.abo files withing top, use:
+    To analyze all *.abo files within top, use:
 
         parser, paths, okfiles = AbinitTimerParser.walk(top=".", ext=".abo")
     """

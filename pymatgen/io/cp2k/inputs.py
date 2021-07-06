@@ -122,7 +122,7 @@ class Keyword(MSONable):
     @classmethod
     def from_dict(cls, d):
         """
-        Initialise from dictonary
+        Initialise from dictionary
         """
         return Keyword(
             d["name"],
@@ -1133,7 +1133,7 @@ class OrbitalTransformation(Section):
             + "is performed. If preconditioned correctly, method guaranteed to find minimum. "
             + "Disadvantages: Sensitive to preconditioning. A good preconditioner can be "
             + "expensive. No smearing, or advanced SCF mixing possible: POOR convergence for "
-            + "metalic systems."
+            + "metallic systems."
         )
 
         keywords = {

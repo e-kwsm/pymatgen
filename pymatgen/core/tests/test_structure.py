@@ -1163,7 +1163,7 @@ class StructureTest(PymatgenTest):
             "Initial Structure not defaulting to behavior in SiteCollection",
         )
         s = Structure.from_sites(s, charge=1)
-        self.assertEqual(s.charge, 1, "Overall charge not being stored in seperate property")
+        self.assertEqual(s.charge, 1, "Overall charge not being stored in separate property")
         s = s.copy()
         self.assertEqual(s.charge, 1, "Overall charge not being copied properly with no sanitization")
         s = s.copy(sanitize=True)

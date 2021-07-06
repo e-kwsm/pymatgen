@@ -55,7 +55,7 @@ direct
         poscar_string = ""
         self.assertRaises(ValueError, Poscar.from_string, poscar_string)
 
-        # Vasp 4 tyle file with default names, i.e. no element symbol found.
+        # Vasp 4 style file with default names, i.e. no element symbol found.
         poscar_string = """Test2
 1.0
 3.840198 0.000000 0.000000
@@ -70,7 +70,7 @@ direct
             warnings.simplefilter("ignore")
             poscar = Poscar.from_string(poscar_string)
         self.assertEqual(poscar.structure.composition, Composition("HHe"))
-        # Vasp 4 tyle file with default names, i.e. no element symbol found.
+        # Vasp 4 style file with default names, i.e. no element symbol found.
         poscar_string = """Test3
 1.0
 3.840198 0.000000 0.000000

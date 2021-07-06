@@ -153,7 +153,7 @@ class TransformedStructure(MSONable):
 
         Args:
             structure_filter (StructureFilter): A filter implementating the
-                AbstractStructureFilter API. Tells transmuter waht structures
+                AbstractStructureFilter API. Tells transmuter what structures
                 to retain.
         """
         hdict = structure_filter.as_dict()

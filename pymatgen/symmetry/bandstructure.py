@@ -310,7 +310,7 @@ of the input structure. Use `KPathSeek` for the path in the original author-inte
     @staticmethod
     def get_continuous_path(bandstructure):
         """
-        Obtain a continous version of an inputted path using graph theory.
+        Obtain a continuous version of an inputted path using graph theory.
         This routine will attempt to add connections between nodes of
         odd-degree to ensure a Eulerian path can be formed. Initial
         k-path must be able to be converted to a connected graph. See
@@ -321,7 +321,7 @@ of the input structure. Use `KPathSeek` for the path in the original author-inte
         bandstructure (BandstructureSymmLine): BandstructureSymmLine object.
 
         Returns:
-        bandstructure (BandstructureSymmLine): New BandstructureSymmLine object with continous path.
+        bandstructure (BandstructureSymmLine): New BandstructureSymmLine object with continuous path.
         """
 
         G = nx.Graph()

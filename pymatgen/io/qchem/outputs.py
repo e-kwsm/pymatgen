@@ -306,11 +306,11 @@ class QCOutput(MSONable):
     def multiple_outputs_from_file(cls, filename, keep_sub_files=True):
         """
         Parses a QChem output file with multiple calculations
-        # 1.) Seperates the output into sub-files
+        # 1.) Separates the output into sub-files
             e.g. qcout -> qcout.0, qcout.1, qcout.2 ... qcout.N
             a.) Find delimeter for multiple calcualtions
-            b.) Make seperate output sub-files
-        2.) Creates seperate QCCalcs for each one from the sub-files
+            b.) Make separate output sub-files
+        2.) Creates separate QCCalcs for each one from the sub-files
         """
         to_return = []
         with zopen(filename, "rt") as f:

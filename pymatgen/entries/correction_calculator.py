@@ -314,7 +314,7 @@ class CorrectionCalculator:
                 round(self.corrections_std_error[i], 4),
             )
 
-        # set ozonide correction to 0 so that this species does not recieve a correction
+        # set ozonide correction to 0 so that this species does not receive a correction
         # while other oxide types do
         self.corrections_dict["ozonide"] = (0, 0)
 

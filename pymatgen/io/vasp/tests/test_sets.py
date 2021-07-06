@@ -285,7 +285,7 @@ class MITMPRelaxSetTest(PymatgenTest):
         incar = MITRelaxSet(s, user_incar_settings={"LDAU": True}).incar
         self.assertFalse("LDAUU" in incar)  # LDAU = False
 
-        # User set a compound to be sulfide by specifing values of "LDAUL" etc.
+        # User set a compound to be sulfide by specifying values of "LDAUL" etc.
         s = Structure(lattice, ["Fe", "Cl", "S"], coords)
         incar = MITRelaxSet(
             s,

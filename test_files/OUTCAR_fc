@@ -875,7 +875,7 @@ Space group operators:
    NKREDY  =     1    reduce k-point grid by
    NKREDZ  =     1    reduce k-point grid by
    SHIFTRED=     F    shift reduced grid of Gamma
-   HFKIDENT=     F    idential grid for each k-point
+   HFKIDENT=     F    identical grid for each k-point
    ODDONLY =     F    use only odd q-grid points
    EVENONLY=     F    use only even q-grid points
    HFALPHA =   -1.0000 decay constant for conv. correction

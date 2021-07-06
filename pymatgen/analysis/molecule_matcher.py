@@ -368,7 +368,7 @@ class InchiMolAtomMapper(AbstractMolAtomMapper):
                 OBMol object
             ilabel1: inchi label map of the first molecule
             ilabel2: inchi label map of the second molecule
-            eq_atoms: equivalent atom lables
+            eq_atoms: equivalent atom labels
 
         Return:
             corrected inchi labels of heavy atoms of the second molecule

@@ -620,7 +620,7 @@ class LobsterNeighbors(NearNeighbors):
         Args:
             additional_condition (int): additional condition (see above)
             lowerlimit (float): lower limit that tells you which ICOHPs are considered
-            upperlimit (float): upper limit that tells you which ICOHPs are considerd
+            upperlimit (float): upper limit that tells you which ICOHPs are considered
             only_bonds_to (list): list of str, e.g. ["O"] that will ensure that only bonds to "O" will be considered
 
         Returns:
@@ -726,7 +726,7 @@ class LobsterNeighbors(NearNeighbors):
         Args:
             isite: number of site in structure (starts with 0)
             icohps: icohps
-            additional_condition (int): additonal condition
+            additional_condition (int): additional condition
 
         Returns:
 
@@ -860,7 +860,7 @@ class LobsterNeighbors(NearNeighbors):
             icohpcollection: Icohpcollection object
             isite (int): number of a site
             lowerlimit (float): lower limit that tells you which ICOHPs are considered
-            upperlimit (float): upper limit that tells you which ICOHPs are considerd
+            upperlimit (float): upper limit that tells you which ICOHPs are considered
             only_bonds_to (list): list of str, e.g. ["O"] that will ensure that only bonds to "O" will be considered
 
         Returns:
@@ -952,7 +952,7 @@ class LobsterLightStructureEnvironments(LightStructureEnvironments):
         Args:
             structure: Structure object
             list_ce_symbol: list of symbols for coordination environments
-            list_csm: list of continous symmetry measures
+            list_csm: list of continuous symmetry measures
             list_permutation: list of permutations
             list_neighsite: list of neighboring sites
             list_neighisite: list of neighboring isites (number of a site)

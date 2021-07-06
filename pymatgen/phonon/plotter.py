@@ -29,7 +29,7 @@ def freq_units(units):
         units: str, accepted values: thz, ev, mev, ha, cm-1, cm^-1
 
     Returns:
-        Returns conversion factor from THz to the requred units and the label in the form of a namedtuple
+        Returns conversion factor from THz to the required units and the label in the form of a namedtuple
 
     """
 

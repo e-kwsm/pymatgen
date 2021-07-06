@@ -783,7 +783,7 @@ class BSPlotter:
                     labels[i] = "$" + l + "$"
 
             # If next branch is not continuous,
-            # join the firts lbl to the previous tick label
+            # join the first lbl to the previous tick label
             # and add the second lbl to ticks list
             # otherwise add to ticks list both new labels.
             # Similar for distances.
@@ -3916,7 +3916,7 @@ def plot_fermi_surface(
     transparency_factor=None,
     labels_scale_factor=0.05,
     points_scale_factor=0.02,
-    interative=True,
+    interactive=True,
 ):
     """
     Plot the Fermi surface at specific energy value using Boltztrap 1 FERMI
@@ -3956,7 +3956,7 @@ def plot_fermi_surface(
             surface.
         labels_scale_factor (float): factor to tune size of the kpoint labels
         points_scale_factor (float): factor to tune size of the kpoint points
-        interative (bool): if True an interactive figure will be shown.
+        interactive (bool): if True an interactive figure will be shown.
             If False a non interactive figure will be shown, but it is possible
             to plot other surfaces on the same figure. To make it interactive,
             run mlab.show().
@@ -4096,7 +4096,7 @@ def plot_fermi_surface(
         # mlab.view(distance='auto')
         fig.scene.isometric_view()
 
-    if interative:
+    if interactive:
         mlab.show()
 
     return fig, mlab

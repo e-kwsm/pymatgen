@@ -777,7 +777,7 @@ class Plane:
         Computes the distances from the plane to each of the points. Positive distances are on the side of the
         normal of the plane while negative distances are on the other side. Indices sorting the points from closest
         to furthest is also computed. Grouped indices are also given, for which indices of the distances that are
-        separated by less than delta are grouped together. The delta parameter is either set explictly or taken as
+        separated by less than delta are grouped together. The delta parameter is either set explicitly or taken as
         a fraction (using the delta_factor parameter) of the maximal point distance.
         :param points: Points for which distances are computed
         :param delta: Distance interval for which two points are considered in the same group.

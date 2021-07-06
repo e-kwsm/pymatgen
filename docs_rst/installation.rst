@@ -70,7 +70,7 @@ Conda-based install
 ===================
 
 For these instructions, we will assume the **64-bit** versions of all OSes.
-For OSX and Linux, both latest Python 3.x adn 2.7 are supported. For Windows,
+For OSX and Linux, both latest Python 3.x and 2.7 are supported. For Windows,
 only latest Python 3.x is supported. Most common functionality should work
 out of the box on Windows, but some specialized analyses relying on external
 programs may require you to compile those programs from source.
@@ -195,7 +195,7 @@ to see full list of choices.
 
     The Materials Project currently uses older versions of the VASP pseudopotentials
     for maximum compatibility with historical data, rather than the current 52/54
-    pseudopotentials. This setting can be overriden by the user if desired.
+    pseudopotentials. This setting can be overridden by the user if desired.
     As such, current versions of pymatgen will check the hashes of your pseudopotentials
     when constructing input sets to ensure the correct, compatible pseudopotential sets are
     used, so that total energies can be compared to those in the Materials Project database.

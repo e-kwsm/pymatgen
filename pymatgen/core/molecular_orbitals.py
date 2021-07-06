@@ -4,7 +4,7 @@
 
 """
 This module implements a MolecularOrbital class to represent band character in
-solids. Usefull for predicting PDOS character from structural information.
+solids. Useful for predicting PDOS character from structural information.
 """
 
 from itertools import chain, combinations
@@ -19,11 +19,11 @@ class MolecularOrbitals:
     formula, since no structural characteristics are taken into account.
 
     The band character of a crystal emerges from the atomic orbitals of the
-    constituant ions, hybridization/covalent bonds, and the spin-orbit
+    constituent ions, hybridization/covalent bonds, and the spin-orbit
     interaction (ex: Fe2O3). Right now the orbitals are only built from
     the uncharged atomic species. Functionality can be improved by:
     1) calculate charged ion orbital energies
-    2) incorportate the coordination enviornment to account for covalant bonds
+    2) incorportate the coordination environment to account for covalant bonds
 
     The atomic orbital energies are stored in pymatgen.core.periodic_table.JSON
 
@@ -46,7 +46,7 @@ class MolecularOrbitals:
             aos:         the consituant atomic orbitals for each element as a
                          dictionary
             band_edges:  dictionary containing the highest occupied molecular
-                         orbital (HOMO), lowest unocupied molecular orbital
+                         orbital (HOMO), lowest unoccupied molecular orbital
                          (LUMO), and whether the material is predicted to be a
                          metal
         """

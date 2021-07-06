@@ -438,7 +438,7 @@ Obtaining Guess
 performing a single roothaan step with Fock from read density so that orbitals are available to all algorithms
  K construction time:  CPU 2.66 s  wall 2.73 s
 energy of the guess density (C=0) -350.289770348854
-performing fock build in obtain guess so that inital energy evaluation is possible
+performing fock build in obtain guess so that initial energy evaluation is possible
  K construction time:  CPU 2.78 s  wall 2.91 s
 Energy after obtain guess = -348.494520612679
 Begin Timing: normal SCF calculation

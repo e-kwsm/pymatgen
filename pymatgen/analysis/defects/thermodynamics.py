@@ -216,9 +216,9 @@ class DefectPhaseDiagram(MSONable):
 
             hs_ints = HalfspaceIntersection(hs_hyperplanes, np.array(interior_point))
 
-            # Group the intersections and coresponding facets
+            # Group the intersections and corresponding facets
             ints_and_facets = zip(hs_ints.intersections, hs_ints.dual_facets)
-            # Only inlcude the facets corresponding to entries, not the boundaries
+            # Only include the facets corresponding to entries, not the boundaries
             total_entries = len(defects)
             ints_and_facets = filter(
                 lambda int_and_facet: all(np.array(int_and_facet[1]) < total_entries),

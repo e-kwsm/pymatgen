@@ -411,7 +411,7 @@ v2019.10.2
 ----------
 * IRSpectra class (@henriquemiranda)
 * Much faster get_neighbors written in Cython (@chc273).
-* VolumetricData allows for sum or substraction of data with different
+* VolumetricData allows for sum or subtraction of data with different
   structures, with warnings.
 
 v2019.9.16
@@ -736,7 +736,7 @@ v2018.5.21
 
 v2018.5.14
 ----------
-* Dash docs now avaiable for pymatgen. See pymatgen.org "Offline docs" section
+* Dash docs now available for pymatgen. See pymatgen.org "Offline docs" section
   for details.
 * Better CrystalNN. (Anubhav Jain)
 * Fixes for elastic module. (Joseph Montoya)
@@ -1302,7 +1302,7 @@ v3.5.2
 
 v3.5.1
 ------
-* New derived input sets for generating inputs that depende on previuos
+* New derived input sets for generating inputs that depende on previous
   calculations. Old input sets deprecated.
 
 v3.5.0

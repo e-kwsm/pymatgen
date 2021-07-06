@@ -155,7 +155,7 @@ class AdsorbateSiteFinderTest(PymatgenTest):
                 self.assertEqual(len(adslabs), 1)
 
             # Test out whether it can correctly dope both
-            # sides. Avoid (111) becasue it is not symmetric
+            # sides. Avoid (111) because it is not symmetric
             if tuple(slab.miller_index) != (1, 1, 1):
                 adslabs = adsgen.generate_substitution_structures("Ni", sub_both_sides=True, target_species=["Mg"])
                 # Test if default parameters dope the surface site

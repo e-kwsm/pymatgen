@@ -1058,7 +1058,7 @@ class Species(MSONable, Stringify):
     def __hash__(self):
         """
         Equal Species should have the same str representation, hence
-        should hash equally. Unequal Species will have differnt str
+        should hash equally. Unequal Species will have different str
         representations.
         """
         return self.__str__().__hash__()
@@ -1131,7 +1131,7 @@ class Species(MSONable, Stringify):
             A Species object.
 
         Raises:
-            ValueError if species_string cannot be intepreted.
+            ValueError if species_string cannot be interpreted.
         """
 
         # e.g. Fe2+,spin=5
@@ -1379,7 +1379,7 @@ class DummySpecies(Species):
                 raise ValueError("{} is not a supported property".format(k))
 
     def __getattr__(self, a):
-        # overriding getattr doens't play nice with pickle, so we
+        # overriding getattr doesn't play nice with pickle, so we
         # can't use self._properties
         p = object.__getattribute__(self, "_properties")
         if a in p:
@@ -1467,7 +1467,7 @@ class DummySpecies(Species):
             A DummySpecies object.
 
         Raises:
-            ValueError if species_string cannot be intepreted.
+            ValueError if species_string cannot be interpreted.
         """
         m = re.search(r"([A-ZAa-z]*)([0-9.]*)([+\-]*)(.*)", species_string)
         if m:

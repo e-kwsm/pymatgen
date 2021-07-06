@@ -879,7 +879,7 @@ class StructureGraph(MSONable):
         # graphs using matplotlib, these also work here. However,
         # a dedicated tool like GraphViz allows for much easier
         # control over graph appearance and also correctly displays
-        # mutli-graphs (matplotlib can superimpose multiple edges).
+        # multi-graphs (matplotlib can superimpose multiple edges).
 
         g = self.graph.copy()
 
@@ -2627,7 +2627,7 @@ class MoleculeGraph(MSONable):
         # graphs using matplotlib, these also work here. However,
         # a dedicated tool like GraphViz allows for much easier
         # control over graph appearance and also correctly displays
-        # mutli-graphs (matplotlib can superimpose multiple edges).
+        # multi-graphs (matplotlib can superimpose multiple edges).
 
         g = self.graph.copy()
 

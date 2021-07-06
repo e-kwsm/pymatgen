@@ -3,7 +3,7 @@
 # Distributed under the terms of the MIT License.
 
 """
-Classes for reading/manipulating/writing VASP ouput files.
+Classes for reading/manipulating/writing VASP output files.
 """
 
 import glob
@@ -3945,7 +3945,7 @@ class Procar:
 
     .. attribute:: weights
 
-        The weights associated with each k-point as an nd.array of lenght
+        The weights associated with each k-point as an nd.array of length
         nkpoints.
 
     ..attribute:: phase_factors
