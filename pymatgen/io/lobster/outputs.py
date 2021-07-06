@@ -194,7 +194,7 @@ class Cohpcar:
         can be easily used with a Structure object.
 
         Example header line: No.4:Fe1->Fe9(2.4524893531900283)
-        Example header line for orbtial-resolved COHP:
+        Example header line for orbital-resolved COHP:
             No.1:Fe1[3p_x]->Fe2[3d_x^2-y^2](2.456180552772262)
 
         Args:

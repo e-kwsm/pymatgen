@@ -14,7 +14,7 @@ from pymatgen.io.vasp.outputs import Wavecar
 
 class SOCSpillage:
     """
-    Spin-orbit spillage criteria to predict whether a material is topologically non-trival.
+    Spin-orbit spillage criteria to predict whether a material is topologically non-trivial.
     The spillage criteria physically signifies number of band-inverted electrons.
     A non-zero, high value (generally >0.5) suggests non-trivial behavior.
     """
