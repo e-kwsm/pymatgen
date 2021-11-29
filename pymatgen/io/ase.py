@@ -37,7 +37,7 @@ class AseAtomsAdaptor:
     """
 
     @staticmethod
-    def get_atoms(structure, **kwargs):
+    def get_atoms(structure, **kwargs) -> Atoms:
         """
         Returns ASE Atoms object from pymatgen structure or molecule.
 

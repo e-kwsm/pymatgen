@@ -52,7 +52,7 @@ from pymatgen.util.num import make_symmetric_matrix_from_upper_tri
 logger = logging.getLogger(__name__)
 
 
-def _parse_parameters(val_type, val):
+def _parse_parameters(val_type: str, val):
     """
     Helper function to convert a Vasprun parameter into the proper type.
     Boolean, int and float types are converted.
@@ -70,7 +70,7 @@ def _parse_parameters(val_type, val):
     return float(val)
 
 
-def _parse_v_parameters(val_type, val, filename, param_name):
+def _parse_v_parameters(val_type: str, val, filename, param_name):
     """
     Helper function to convert a Vasprun array-type parameter into the proper
     type. Boolean, int and float types are converted.
@@ -120,7 +120,7 @@ def _parse_varray(elem):
     return m
 
 
-def _parse_from_incar(filename, key):
+def _parse_from_incar(filename, key: str):
     """
     Helper function to parse a parameter from the INCAR.
     """
@@ -135,7 +135,7 @@ def _parse_from_incar(filename, key):
     return None
 
 
-def _vasprun_float(f):
+def _vasprun_float(f: str):
     """
     Large numbers are often represented as ********* in the vasprun.
     This function parses these values as np.nan

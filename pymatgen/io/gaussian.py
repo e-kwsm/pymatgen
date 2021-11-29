@@ -7,6 +7,7 @@ This module implements input and output processing from Gaussian.
 
 import re
 import warnings
+from typing import Optional
 
 import numpy as np
 import scipy.constants as cst
@@ -31,7 +32,7 @@ __date__ = "8/1/15"
 float_patt = re.compile(r"\s*([+-]?\d+\.\d+)")
 
 
-def read_route_line(route):
+def read_route_line(route: str):
     """
     read route line in gaussian input/output and return functional basis_set
     and a dictionary of other route parameters
@@ -97,14 +98,14 @@ class GaussianInput:
         self,
         mol,
         charge=None,
-        spin_multiplicity=None,
+        spin_multiplicity: Optional[int] = None,
         title=None,
-        functional="HF",
-        basis_set="6-31G(d)",
+        functional: str = "HF",
+        basis_set: str = "6-31G(d)",
         route_parameters=None,
         input_parameters=None,
         link0_parameters=None,
-        dieze_tag="#P",
+        dieze_tag: str = "#P",
         gen_basis=None,
     ):
         """

@@ -32,7 +32,7 @@ class Mcsqs:
 
         self.structure = structure
 
-    def to_string(self):
+    def to_string(self) -> str:
         """
         Returns a structure in mcsqs rndstr.in format.
         :return (str):
@@ -69,7 +69,7 @@ class Mcsqs:
         return "\n".join(output)
 
     @staticmethod
-    def structure_from_string(data):
+    def structure_from_string(data: str) -> Structure:
         """
         Parses a rndstr.in, lat.in or bestsqs.out file into pymatgen's
         Structure format.
