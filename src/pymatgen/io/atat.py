@@ -27,7 +27,7 @@ class Mcsqs:
         """
         self.structure = structure
 
-    def to_str(self):
+    def to_str(self) -> str:
         """
         Returns:
             str: a structure in mcsqs rndstr.in format.
@@ -55,7 +55,7 @@ class Mcsqs:
         return "\n".join(output)
 
     @staticmethod
-    def structure_from_str(data):
+    def structure_from_str(data) -> Structure:
         """
         Parses a rndstr.in, lat.in or bestsqs.out file into pymatgen's
         Structure format.

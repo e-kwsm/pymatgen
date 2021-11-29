@@ -36,7 +36,7 @@ __date__ = "8/1/15"
 float_patt = re.compile(r"\s*([+-]?\d+\.\d+)")
 
 
-def read_route_line(route):
+def read_route_line(route: str):
     """
     read route line in gaussian input/output and return functional basis_set
     and a dictionary of other route parameters.
@@ -93,14 +93,14 @@ class GaussianInput:
         self,
         mol,
         charge=None,
-        spin_multiplicity=None,
+        spin_multiplicity: Optional[int] = None,
         title=None,
-        functional="HF",
-        basis_set="6-31G(d)",
+        functional: str = "HF",
+        basis_set: str = "6-31G(d)",
         route_parameters=None,
         input_parameters=None,
         link0_parameters=None,
-        dieze_tag="#P",
+        dieze_tag: str = "#P",
         gen_basis=None,
     ):
         """
@@ -385,7 +385,7 @@ class GaussianInput:
     def __str__(self):
         return self.to_str()
 
-    def to_str(self, cart_coords=False):
+    def to_str(self, cart_coords: bool = False) -> str:
         """Return GaussianInput string.
 
         Args:
@@ -444,7 +444,7 @@ class GaussianInput:
         output.extend((para_dict_to_str(self.input_parameters, "\n"), "\n"))
         return "\n".join(output)
 
-    def write_file(self, filename, cart_coords=False):
+    def write_file(self, filename, cart_coords: bool = False):
         """Write the input string into a file.
 
         Option: see __str__ method
