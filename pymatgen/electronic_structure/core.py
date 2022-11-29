@@ -15,7 +15,7 @@ from monty.json import MSONable
 @unique
 class Spin(Enum):
     """
-    Enum type for Spin.  Only up and down.
+    Enum type for Spin. Only up and down.
     Usage: Spin.up, Spin.down.
     """
 
@@ -222,7 +222,6 @@ class Magmom(MSONable):
         :param saxis: (list/numpy array) spin quantization axis
         :return: np.ndarray of length 3
         """
-
         # transform back to moment with spin axis [0, 0, 1]
         m_inv = self._get_transformation_matrix_inv(self.saxis)
         moment = np.matmul(self.moment, m_inv)
@@ -433,15 +432,16 @@ class Magmom(MSONable):
     def __abs__(self):
         return np.linalg.norm(self.moment)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         """
         Equal if 'global' magnetic moments are the same, saxis can differ.
         """
-        other = Magmom(other)
-        return np.allclose(self.global_moment, other.global_moment)
+        try:
+            other_magmom = Magmom(other)
+        except (TypeError, ValueError):
+            return NotImplemented
 
-    def __ne__(self, other):
-        return not self.__eq__(other)
+        return np.allclose(self.global_moment, other_magmom.global_moment)
 
     def __lt__(self, other):
         return abs(self) < abs(other)
@@ -466,7 +466,7 @@ class Magmom(MSONable):
         user intervention.
 
         However, should be used with caution for non-collinear
-        structures and might give non-sensical results except in the case
+        structures and might give nonsensical results except in the case
         of only slightly non-collinear structures (e.g. small canting).
 
         This approach is also used to obtain "diff" VolumetricDensity

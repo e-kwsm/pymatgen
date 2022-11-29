@@ -5,9 +5,10 @@
 Module containing class to create an ion
 """
 
+from __future__ import annotations
+
 import re
 from copy import deepcopy
-from typing import Dict, Tuple
 
 from monty.json import MSONable
 
@@ -33,7 +34,7 @@ class Ion(Composition, MSONable, Stringify):
         self._charge = charge
 
     @classmethod
-    def from_formula(cls, formula: str) -> "Ion":
+    def from_formula(cls, formula: str) -> Ion:
         """
         Creates Ion from formula. The net charge can either be represented as
         Mn++, Mn+2, Mn[2+], Mn[++], or Mn[+2]. Note the order of the sign and
@@ -98,7 +99,7 @@ class Ion(Composition, MSONable, Stringify):
         chg_str = charge_string(self._charge, brackets=False)
         return anon_formula + chg_str
 
-    def get_reduced_formula_and_factor(self, iupac_ordering: bool = False, hydrates: bool = True) -> Tuple[str, float]:
+    def get_reduced_formula_and_factor(self, iupac_ordering: bool = False, hydrates: bool = True) -> tuple[str, float]:
         """
         Calculates a reduced formula and factor.
 
@@ -206,7 +207,7 @@ class Ion(Composition, MSONable, Stringify):
         """
         return self._charge
 
-    def as_dict(self) -> Dict[str, float]:
+    def as_dict(self) -> dict[str, float]:
         """
         Returns:
             dict with composition, as well as charge
@@ -216,13 +217,12 @@ class Ion(Composition, MSONable, Stringify):
         return d
 
     @classmethod
-    def from_dict(cls, d) -> "Ion":
+    def from_dict(cls, d) -> Ion:
         """
         Generates an ion object from a dict created by as_dict().
 
         Args:
-            d:
-                {symbol: amount} dict.
+            d: {symbol: amount} dict.
         """
         input = deepcopy(d)
         charge = input.pop("charge")
@@ -245,7 +245,47 @@ class Ion(Composition, MSONable, Stringify):
         """Composition of ion."""
         return Composition(self._data)
 
-    def __eq__(self, other):
+    def oxi_state_guesses(  # type: ignore
+        self,
+        oxi_states_override: dict | None = None,
+        all_oxi_states: bool = False,
+        max_sites: int | None = None,
+    ) -> list[dict[str, float]]:
+        """
+        Checks if the composition is charge-balanced and returns back all
+        charge-balanced oxidation state combinations. Composition must have
+        integer values. Note that more num_atoms in the composition gives
+        more degrees of freedom. e.g., if possible oxidation states of
+        element X are [2,4] and Y are [-3], then XY is not charge balanced
+        but X2Y2 is. Results are returned from most to least probable based
+        on ICSD statistics. Use max_sites to improve performance if needed.
+
+        Args:
+            oxi_states_override (dict): dict of str->list to override an
+                element's common oxidation states, e.g. {"V": [2,3,4,5]}
+            all_oxi_states (bool): if True, an element defaults to
+                all oxidation states in pymatgen Element.icsd_oxidation_states.
+                Otherwise, default is Element.common_oxidation_states. Note
+                that the full oxidation state list is *very* inclusive and
+                can produce nonsensical results.
+            max_sites (int): if possible, will reduce Compositions to at most
+                this many sites to speed up oxidation state guesses. If the
+                composition cannot be reduced to this many sites a ValueError
+                will be raised. Set to -1 to just reduce fully. If set to a
+                number less than -1, the formula will be fully reduced but a
+                ValueError will be thrown if the number of atoms in the reduced
+                formula is greater than abs(max_sites).
+
+        Returns:
+            A list of dicts - each dict reports an element symbol and average
+                oxidation state across all sites in that composition. If the
+                composition is not charge balanced, an empty list is returned.
+        """
+        return self._get_oxid_state_guesses(all_oxi_states, max_sites, oxi_states_override, self.charge)[0]
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Ion):
+            return NotImplemented
         if self.composition != other.composition:
             return False
         if self.charge != other.charge:

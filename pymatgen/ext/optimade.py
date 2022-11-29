@@ -2,11 +2,12 @@
 Optimade support.
 """
 
+from __future__ import annotations
+
 import logging
 import sys
 from collections import namedtuple
 from os.path import join
-from typing import Dict, List, Optional, Set, Union
 from urllib.parse import urlparse
 
 import requests
@@ -42,7 +43,7 @@ class OptimadeRester:
 
     # regenerate on-demand from official providers.json using OptimadeRester.refresh_aliases()
     # these aliases are provided as a convenient shortcut for users of the OptimadeRester class
-    aliases: Dict[str, str] = {
+    aliases: dict[str, str] = {
         "aflow": "http://aflow.org/API/optimade/",
         "cod": "https://www.crystallography.net/cod/optimade",
         "mcloud.2dstructures": "https://aiida.materialscloud.org/2dstructures/optimade",
@@ -66,9 +67,9 @@ class OptimadeRester:
     }
 
     # The set of OPTIMADE fields that are required to define a `pymatgen.core.Structure`
-    mandatory_response_fields: Set[str] = {"lattice_vectors", "cartesian_site_positions", "species", "species_at_sites"}
+    mandatory_response_fields: set[str] = {"lattice_vectors", "cartesian_site_positions", "species", "species_at_sites"}
 
-    def __init__(self, aliases_or_resource_urls: Optional[Union[str, List[str]]] = None, timeout: int = 5):
+    def __init__(self, aliases_or_resource_urls: str | list[str] | None = None, timeout: int = 5):
         """
         OPTIMADE is an effort to provide a standardized interface to retrieve information
         from many different materials science databases.
@@ -99,7 +100,6 @@ class OptimadeRester:
             timeout: number of seconds before an attempted request is abandoned, a good
             timeout is useful when querying many providers, some of which may be offline
         """
-
         # TODO: maybe we should use the nice pydantic models from optimade-python-tools
         #  for response validation, and use the Lark parser for filter validation
         self.session = requests.Session()
@@ -113,10 +113,10 @@ class OptimadeRester:
         self.resources = {}
 
         if not aliases_or_resource_urls:
-            aliases_or_resource_urls = list(self.aliases.keys())
+            aliases_or_resource_urls = list(self.aliases)
             _logger.warning(
                 "Connecting to all known OPTIMADE providers, this will be slow. Please connect to only the "
-                f"OPTIMADE providers you want to query. Choose from: {', '.join(self.aliases.keys())}"
+                f"OPTIMADE providers you want to query. Choose from: {', '.join(self.aliases)}"
             )
 
         for alias_or_resource_url in aliases_or_resource_urls:
@@ -160,16 +160,15 @@ class OptimadeRester:
 
     @staticmethod
     def _build_filter(
-        elements: Union[str, List[str]] = None,
-        nelements: int = None,
-        nsites: int = None,
-        chemical_formula_anonymous: str = None,
-        chemical_formula_hill: str = None,
+        elements: str | list[str] | None = None,
+        nelements: int | None = None,
+        nsites: int | None = None,
+        chemical_formula_anonymous: str | None = None,
+        chemical_formula_hill: str | None = None,
     ):
         """
         Convenience method to build an OPTIMADE filter.
         """
-
         filters = []
 
         if elements:
@@ -182,13 +181,13 @@ class OptimadeRester:
             if isinstance(nsites, (list, tuple)):
                 filters.append(f"(nsites>={min(nsites)} AND nsites<={max(nsites)})")
             else:
-                filters.append(f"(nsites={int(nsites)})")
+                filters.append(f"({nsites=})")
 
         if nelements:
             if isinstance(nelements, (list, tuple)):
                 filters.append(f"(nelements>={min(nelements)} AND nelements<={max(nelements)})")
             else:
-                filters.append(f"(nelements={int(nelements)})")
+                filters.append(f"({nelements=})")
 
         if chemical_formula_anonymous:
             filters.append(f'(chemical_formula_anonymous="{chemical_formula_anonymous}")')
@@ -200,12 +199,12 @@ class OptimadeRester:
 
     def get_structures(
         self,
-        elements: Union[List[str], str] = None,
-        nelements: int = None,
-        nsites: int = None,
-        chemical_formula_anonymous: str = None,
-        chemical_formula_hill: str = None,
-    ) -> Dict[str, Dict[str, Structure]]:
+        elements: list[str] | str | None = None,
+        nelements: int | None = None,
+        nsites: int | None = None,
+        chemical_formula_anonymous: str | None = None,
+        chemical_formula_hill: str | None = None,
+    ) -> dict[str, dict[str, Structure]]:
         """
         Retrieve Structures from OPTIMADE providers.
 
@@ -221,7 +220,6 @@ class OptimadeRester:
 
         Returns: Dict of (Dict Structures keyed by that database's id system) keyed by provider
         """
-
         optimade_filter = self._build_filter(
             elements=elements,
             nelements=nelements,
@@ -234,13 +232,13 @@ class OptimadeRester:
 
     def get_snls(
         self,
-        elements: Union[List[str], str] = None,
-        nelements: int = None,
-        nsites: int = None,
-        chemical_formula_anonymous: str = None,
-        chemical_formula_hill: str = None,
-        additional_response_fields: Union[str, List[str], Set[str]] = None,
-    ) -> Dict[str, Dict[str, StructureNL]]:
+        elements: list[str] | str | None = None,
+        nelements: int | None = None,
+        nsites: int | None = None,
+        chemical_formula_anonymous: str | None = None,
+        chemical_formula_hill: str | None = None,
+        additional_response_fields: str | list[str] | set[str] | None = None,
+    ) -> dict[str, dict[str, StructureNL]]:
         """
         Retrieve StructureNL from OPTIMADE providers.
 
@@ -262,7 +260,6 @@ class OptimadeRester:
 
         Returns: Dict of (Dict of StructureNLs keyed by that database's id system) keyed by provider
         """
-
         optimade_filter = self._build_filter(
             elements=elements,
             nelements=nelements,
@@ -273,7 +270,7 @@ class OptimadeRester:
 
         return self.get_snls_with_filter(optimade_filter, additional_response_fields=additional_response_fields)
 
-    def get_structures_with_filter(self, optimade_filter: str) -> Dict[str, Dict[str, Structure]]:
+    def get_structures_with_filter(self, optimade_filter: str) -> dict[str, dict[str, Structure]]:
         """
         Get structures satisfying a given OPTIMADE filter.
 
@@ -282,7 +279,6 @@ class OptimadeRester:
 
         Returns: Dict of Structures keyed by that database's id system
         """
-
         all_snls = self.get_snls_with_filter(optimade_filter)
         all_structures = {}
 
@@ -294,8 +290,8 @@ class OptimadeRester:
     def get_snls_with_filter(
         self,
         optimade_filter: str,
-        additional_response_fields: Union[str, List[str], Set[str]] = None,
-    ) -> Dict[str, Dict[str, StructureNL]]:
+        additional_response_fields: str | list[str] | set[str] | None = None,
+    ) -> dict[str, dict[str, StructureNL]]:
         """
         Get structures satisfying a given OPTIMADE filter.
 
@@ -304,7 +300,6 @@ class OptimadeRester:
 
         Returns: Dict of Structures keyed by that database's id system
         """
-
         all_snls = {}
 
         fields = self._handle_response_fields(additional_response_fields)
@@ -347,7 +342,7 @@ class OptimadeRester:
         return all_snls
 
     @staticmethod
-    def _get_snls_from_resource(json, url, identifier) -> Dict[str, StructureNL]:
+    def _get_snls_from_resource(json, url, identifier) -> dict[str, StructureNL]:
 
         snls = {}
 
@@ -433,7 +428,7 @@ class OptimadeRester:
 
         return snls
 
-    def _validate_provider(self, provider_url) -> Optional[Provider]:
+    def _validate_provider(self, provider_url) -> Provider | None:
         """
         Checks that a given URL is indeed an OPTIMADE provider,
         returning None if it is not a provider, or the provider
@@ -476,7 +471,7 @@ class OptimadeRester:
             _logger.warning(f"Failed to extract required information from {url}: {exc}")
             return None
 
-    def _parse_provider(self, provider, provider_url) -> Dict[str, Provider]:
+    def _parse_provider(self, provider, provider_url) -> dict[str, Provider]:
         """
         Used internally to update the list of providers or to
         check a given URL is valid.
@@ -495,7 +490,6 @@ class OptimadeRester:
             A dictionary of keys (in format of "provider.database") to
             Provider objects.
         """
-
         try:
             url = join(provider_url, "v1/links")
             provider_link_json = self._get_json(url)
@@ -526,7 +520,7 @@ class OptimadeRester:
 
         return _parse_provider_link(provider, provider_link_json)
 
-    def _handle_response_fields(self, additional_response_fields: Union[str, List[str], Set[str]] = None) -> str:
+    def _handle_response_fields(self, additional_response_fields: str | list[str] | set[str] | None = None) -> str:
         """
         Used internally to handle the mandatory and additional response fields.
 

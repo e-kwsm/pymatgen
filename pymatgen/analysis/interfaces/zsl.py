@@ -5,9 +5,11 @@
 This module implements the Zur and McGill lattice matching algorithm
 """
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 from itertools import product
-from typing import Iterator, List
+from typing import Iterator
 
 import numpy as np
 from monty.json import MSONable
@@ -22,12 +24,12 @@ class ZSLMatch(MSONable):
     the appropriate transformation matrix
     """
 
-    film_sl_vectors: List
-    substrate_sl_vectors: List
-    film_vectors: List
-    substrate_vectors: List
-    film_transformation: List
-    substrate_transformation: List
+    film_sl_vectors: list
+    substrate_sl_vectors: list
+    film_vectors: list
+    substrate_vectors: list
+    film_transformation: list
+    substrate_transformation: list
 
     @property
     def match_area(self):
@@ -150,7 +152,6 @@ class ZSLGenerator(MSONable):
                 2.) the transformation matrices for the substrate to create
                 a super lattice of area j*film area
         """
-
         transformation_indices = [
             (i, j)
             for i in range(1, int(self.max_area / film_area))
@@ -185,7 +186,6 @@ class ZSLGenerator(MSONable):
             substrate_vectors(array): substrate vectors to generate super
                 lattices
         """
-
         for (film_transformations, substrate_transformations) in transformation_sets:
             # Apply transformations and reduce using Zur reduce methodology
             films = [reduce_vectors(*np.dot(f, film_vectors)) for f in film_transformations]
@@ -205,7 +205,6 @@ class ZSLGenerator(MSONable):
         Runs the ZSL algorithm to generate all possible matching
         :return:
         """
-
         film_area = vec_area(*film_vectors)
         substrate_area = vec_area(*substrate_vectors)
 

@@ -60,7 +60,6 @@ class StandardTransmuter:
                 Uses multiprocessing.Pool. Default is None, which implies
                 serial.
         """
-
         self.transformed_structures = transformed_structures
         self.ncores = ncores
         if transformations is not None:
@@ -163,12 +162,12 @@ class StandardTransmuter:
             ts.append_filter(structure_filter)
 
     def write_vasp_input(self, **kwargs):
-        r"""
+        """
         Batch write vasp input for a sequence of transformed structures to
         output_dir, following the format output_dir/{formula}_{number}.
 
         Args:
-            \\*\\*kwargs: All kwargs supported by batch_write_vasp_input.
+            kwargs: All kwargs supported by batch_write_vasp_input.
         """
         batch_write_vasp_input(self.transformed_structures, **kwargs)
 
@@ -288,7 +287,6 @@ class CifTransmuter(StandardTransmuter):
             primitive: Same meaning as in __init__.
             extend_collection: Same meaning as in __init__.
         """
-
         allcifs = []
         for fname in filenames:
             with open(fname) as f:

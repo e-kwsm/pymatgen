@@ -5,6 +5,8 @@
 This module provides classes to define everything related to band structures.
 """
 
+from __future__ import annotations
+
 import collections
 import itertools
 import math
@@ -33,7 +35,7 @@ __date__ = "March 14, 2012"
 class Kpoint(MSONable):
     """
     Class to store kpoint objects. A kpoint is defined with a lattice and frac
-    or cartesian coordinates syntax similar than the site object in
+    or Cartesian coordinates syntax similar than the site object in
     pymatgen.core.structure.
     """
 
@@ -54,7 +56,7 @@ class Kpoint(MSONable):
                 cell, i.e., all fractional coordinates satisfy 0 <= a < 1.
                 Defaults to False.
             coords_are_cartesian: Boolean indicating if the coordinates given are
-                in cartesian or fractional coordinates (by default fractional)
+                in Cartesian or fractional coordinates (by default fractional)
             label: the label of the kpoint if any (None by default)
         """
         self._lattice = lattice
@@ -92,7 +94,7 @@ class Kpoint(MSONable):
     @property
     def cart_coords(self):
         """
-        The cartesian coordinates of the kpoint as a numpy array
+        The Cartesian coordinates of the kpoint as a numpy array
         """
         return np.copy(self._ccoords)
 
@@ -119,21 +121,21 @@ class Kpoint(MSONable):
 
     def __str__(self):
         """
-        Returns a string with fractional, cartesian coordinates and label
+        Returns a string with fractional, Cartesian coordinates and label
         """
         return f"{self.frac_coords} {self.cart_coords} {self.label}"
 
     def as_dict(self):
         """
-        Json-serializable dict representation of a kpoint
+        JSON-serializable dict representation of a kpoint
         """
         return {
             "lattice": self.lattice.as_dict(),
             "fcoords": self.frac_coords.tolist(),
             "ccoords": self.cart_coords.tolist(),
             "label": self.label,
-            "@module": self.__class__.__module__,
-            "@class": self.__class__.__name__,
+            "@module": type(self).__module__,
+            "@class": type(self).__name__,
         }
 
     @classmethod
@@ -147,7 +149,6 @@ class Kpoint(MSONable):
         Returns:
             A Kpoint object
         """
-
         return cls(
             coords=d["fcoords"],
             lattice=Lattice.from_dict(d["lattice"]),
@@ -201,15 +202,15 @@ class BandStructure:
 
     def __init__(
         self,
-        kpoints,
-        eigenvals,
-        lattice,
-        efermi,
+        kpoints: np.ndarray,
+        eigenvals: dict[Spin, np.ndarray],
+        lattice: Lattice,
+        efermi: float,
         labels_dict=None,
-        coords_are_cartesian=False,
-        structure=None,
-        projections=None,
-    ):
+        coords_are_cartesian: bool = False,
+        structure: Structure | None = None,
+        projections: dict[Spin, np.ndarray] | None = None,
+    ) -> None:
         """
         Args:
             kpoints: list of kpoint as numpy arrays, in frac_coords of the
@@ -223,9 +224,9 @@ class BandStructure:
             lattice: The reciprocal lattice as a pymatgen Lattice object.
                 Pymatgen uses the physics convention of reciprocal lattice vectors
                 WITH a 2*pi coefficient
-            efermi: fermi energy
+            efermi (float): fermi energy
             labels_dict: (dict) of {} this links a kpoint (in frac coords or
-                cartesian coordinates depending on the coords) to a label.
+                Cartesian coordinates depending on the coords) to a label.
             coords_are_cartesian: Whether coordinates are cartesian.
             structure: The crystal structure (as a pymatgen Structure object)
                 associated with the band structure. This is needed if we
@@ -337,7 +338,7 @@ class BandStructure:
         Returns:
             True if a metal, False if not
         """
-        for spin, values in self.bands.items():
+        for values in self.bands.values():
             for i in range(self.nb_bands):
                 if np.any(values[i, :] - self.efermi < -efermi_tol) and np.any(values[i, :] - self.efermi > efermi_tol):
                     return True
@@ -376,10 +377,10 @@ class BandStructure:
         max_tmp = -float("inf")
         index = None
         kpointvbm = None
-        for spin, v in self.bands.items():
-            for i, j in zip(*np.where(v < self.efermi)):
-                if v[i, j] > max_tmp:
-                    max_tmp = float(v[i, j])
+        for value in self.bands.values():
+            for i, j in zip(*np.where(value < self.efermi)):
+                if value[i, j] > max_tmp:
+                    max_tmp = float(value[i, j])
                     index = j
                     kpointvbm = self.kpoints[j]
 
@@ -397,10 +398,10 @@ class BandStructure:
                 if math.fabs(self.bands[spin][i][index] - max_tmp) < 0.001:
                     list_ind_band[spin].append(i)
         proj = {}
-        for spin, v in self.projections.items():
+        for spin, value in self.projections.items():
             if len(list_ind_band[spin]) == 0:
                 continue
-            proj[spin] = v[list_ind_band[spin][0]][list_ind_kpts[0]]
+            proj[spin] = value[list_ind_band[spin][0]][list_ind_kpts[0]]
         return {
             "band_index": list_ind_band,
             "kpoint_index": list_ind_kpts,
@@ -443,10 +444,10 @@ class BandStructure:
 
         index = None
         kpointcbm = None
-        for spin, v in self.bands.items():
-            for i, j in zip(*np.where(v >= self.efermi)):
-                if v[i, j] < max_tmp:
-                    max_tmp = float(v[i, j])
+        for value in self.bands.values():
+            for i, j in zip(*np.where(value >= self.efermi)):
+                if value[i, j] < max_tmp:
+                    max_tmp = float(value[i, j])
                     index = j
                     kpointcbm = self.kpoints[j]
 
@@ -465,10 +466,10 @@ class BandStructure:
                 if math.fabs(self.bands[spin][i][index] - max_tmp) < 0.001:
                     list_index_band[spin].append(i)
         proj = {}
-        for spin, v in self.projections.items():
+        for spin, value in self.projections.items():
             if len(list_index_band[spin]) == 0:
                 continue
-            proj[spin] = v[list_index_band[spin][0]][list_index_kpoints[0]]
+            proj[spin] = value[list_index_band[spin][0]][list_index_kpoints[0]]
 
         return {
             "band_index": list_index_band,
@@ -554,13 +555,13 @@ class BandStructure:
         dg = self.get_direct_band_gap_dict()
         return min(v["value"] for v in dg.values())
 
-    def get_sym_eq_kpoints(self, kpoint, cartesian=False, tol=1e-2):
+    def get_sym_eq_kpoints(self, kpoint, cartesian=False, tol: float = 1e-2):
         """
         Returns a list of unique symmetrically equivalent k-points.
 
         Args:
             kpoint (1x3 array): coordinate of the k-point
-            cartesian (bool): kpoint is in cartesian or fractional coordinates
+            cartesian (bool): kpoint is in Cartesian or fractional coordinates
             tol (float): tolerance below which coordinates are considered equal
 
         Returns:
@@ -580,12 +581,12 @@ class BandStructure:
                     break
         return np.delete(points, rm_list, axis=0)
 
-    def get_kpoint_degeneracy(self, kpoint, cartesian=False, tol=1e-2):
+    def get_kpoint_degeneracy(self, kpoint, cartesian=False, tol: float = 1e-2):
         """
         Returns degeneracy of a given k-point based on structure symmetry
         Args:
             kpoint (1x3 array): coordinate of the k-point
-            cartesian (bool): kpoint is in cartesian or fractional coordinates
+            cartesian (bool): kpoint is in Cartesian or fractional coordinates
             tol (float): tolerance below which coordinates are considered equal
 
         Returns:
@@ -598,11 +599,11 @@ class BandStructure:
 
     def as_dict(self):
         """
-        Json-serializable dict representation of BandStructure.
+        JSON-serializable dict representation of BandStructure.
         """
         d = {
-            "@module": self.__class__.__module__,
-            "@class": self.__class__.__name__,
+            "@module": type(self).__module__,
+            "@class": type(self).__name__,
             "lattice_rec": self.lattice_rec.as_dict(),
             "efermi": self.efermi,
             "kpoints": [],
@@ -767,7 +768,7 @@ class BandStructureSymmLine(BandStructure, MSONable):
                 WITH a 2*pi coefficient
             efermi: fermi energy
             label_dict: (dict) of {} this link a kpoint (in frac coords or
-                cartesian coordinates depending on the coords).
+                Cartesian coordinates depending on the coords).
             coords_are_cartesian: Whether coordinates are cartesian.
             structure: The crystal structure (as a pymatgen Structure object)
                 associated with the band structure. This is needed if we
@@ -944,7 +945,7 @@ class BandStructureSymmLine(BandStructure, MSONable):
 
     def as_dict(self):
         """
-        Json-serializable dict representation of BandStructureSymmLine.
+        JSON-serializable dict representation of BandStructureSymmLine.
         """
         d = super().as_dict()
         d["branches"] = self.branches
@@ -958,12 +959,11 @@ class LobsterBandStructureSymmLine(BandStructureSymmLine):
 
     def as_dict(self):
         """
-        Json-serializable dict representation of BandStructureSymmLine.
+        JSON-serializable dict representation of BandStructureSymmLine.
         """
-
         d = {
-            "@module": self.__class__.__module__,
-            "@class": self.__class__.__name__,
+            "@module": type(self).__module__,
+            "@class": type(self).__name__,
             "lattice_rec": self.lattice_rec.as_dict(),
             "efermi": self.efermi,
             "kpoints": [],
@@ -1093,7 +1093,7 @@ class LobsterBandStructureSymmLine(BandStructureSymmLine):
             ]
             for i, j in itertools.product(range(self.nb_bands), range(len(self.kpoints))):
                 for key, item in v[i][j].items():
-                    for key2, item2 in item.items():
+                    for item2 in item.values():
                         specie = str(Element(re.split(r"[0-9]+", key)[0]))
                         result[spin][i][j][specie] += item2
         return result

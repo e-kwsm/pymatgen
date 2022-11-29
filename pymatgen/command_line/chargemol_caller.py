@@ -180,19 +180,18 @@ class ChargemolAnalysis:
                 Default: None.
             jobcontrol_kwargs: Keyword arguments for _write_jobscript_for_chargemol.
         """
-
         with ScratchDir("."):
             with zopen(self._chgcarpath, "rt") as f_in:
-                with open("CHGCAR", "wt") as f_out:
+                with open("CHGCAR", "w") as f_out:
                     shutil.copyfileobj(f_in, f_out)
             with zopen(self._potcarpath, "rt") as f_in:
-                with open("POTCAR", "wt") as f_out:
+                with open("POTCAR", "w") as f_out:
                     shutil.copyfileobj(f_in, f_out)
             with zopen(self._aeccar0path, "rt") as f_in:
-                with open("AECCAR0", "wt") as f_out:
+                with open("AECCAR0", "w") as f_out:
                     shutil.copyfileobj(f_in, f_out)
             with zopen(self._aeccar2path, "rt") as f_in:
-                with open("AECCAR2", "wt") as f_out:
+                with open("AECCAR2", "w") as f_out:
                     shutil.copyfileobj(f_in, f_out)
 
             # write job_script file:
@@ -208,7 +207,7 @@ class ChargemolAnalysis:
                 rs.communicate()
             if rs.returncode != 0:
                 raise RuntimeError(
-                    f"Chargemol exited with return code {int(rs.returncode)}. Please check your Chargemol installation."
+                    f"Chargemol exited with return code {rs.returncode}. Please check your Chargemol installation."
                 )
 
             self._from_data_dir()
@@ -362,7 +361,7 @@ class ChargemolAnalysis:
     def _write_jobscript_for_chargemol(
         self,
         net_charge=0.0,
-        periodicity=[True, True, True],
+        periodicity=(True, True, True),
         method="ddec6",
         compute_bond_orders=True,
     ):
@@ -372,8 +371,8 @@ class ChargemolAnalysis:
         Args:
             net_charge (float): Net charge of the system.
                 Defaults to 0.0.
-            periodicity (list[bool]): Periodicity of the system.
-                Default: [True, True, True].
+            periodicity (tuple[bool]): Periodicity of the system.
+                Default: (True, True, True).
             method (str): Method to use for the analysis. Options include "ddec6"
             and "ddec3".
                 Default: "ddec6"
@@ -428,7 +427,7 @@ class ChargemolAnalysis:
             bo = ".true." if compute_bond_orders else ".false."
             lines += f"\n<compute BOs>\n{bo}\n</compute BOs>\n"
 
-        with open("job_control.txt", "wt") as fh:
+        with open("job_control.txt", "w") as fh:
             fh.write(lines)
 
     @staticmethod
@@ -439,7 +438,6 @@ class ChargemolAnalysis:
         Args:
             filepath (str): The path to the DDEC6_even_tempered_net_atomic_charges.xyz file
         """
-
         i = 0
         start = False
         dipoles = []
@@ -504,17 +502,17 @@ class ChargemolAnalysis:
         Returns
             Pymatgen structure with site properties added
         """
-        struc = self.structure.copy()
-        struc.add_site_property("partial_charge_ddec6", self.ddec_charges)
+        struct = self.structure.copy()
+        struct.add_site_property("partial_charge_ddec6", self.ddec_charges)
         if self.dipoles:
-            struc.add_site_property("dipole_ddec6", self.dipoles)
+            struct.add_site_property("dipole_ddec6", self.dipoles)
         if self.bond_order_sums:
-            struc.add_site_property("bond_order_sum_ddec6", self.bond_order_sums)
+            struct.add_site_property("bond_order_sum_ddec6", self.bond_order_sums)
         if self.ddec_spin_moments:
-            struc.add_site_property("spin_moment_ddec6", self.ddec_spin_moments)
+            struct.add_site_property("spin_moment_ddec6", self.ddec_spin_moments)
         if self.cm5_charges:
-            struc.add_site_property("partial_charge_cm5", self.cm5_charges)
-        return struc
+            struct.add_site_property("partial_charge_cm5", self.cm5_charges)
+        return struct
 
     @property
     def summary(self):
@@ -535,7 +533,6 @@ class ChargemolAnalysis:
                         }
             }
         """
-
         summary = {}
         ddec_summary = {
             "partial_charges": self.ddec_charges,
@@ -576,7 +573,6 @@ class ChargemolAnalysis:
         Returns:
             list[float]: site-specific properties
         """
-
         props = []
         if os.path.exists(xyz_path):
             with open(xyz_path) as r:
