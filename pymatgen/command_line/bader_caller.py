@@ -6,8 +6,8 @@ This module implements an interface to the Henkelmann et al.'s excellent
 Fortran code for calculating a Bader charge analysis.
 
 This module depends on a compiled bader executable available in the path.
-Please download the library at http://theory.cm.utexas.edu/vasp/bader/ and
-follow the instructions to compile the executable.
+Please download the library at http://theory.cm.utexas.edu/henkelman/code/bader/
+and follow the instructions to compile the executable.
 
 If you use this module, please cite the following:
 
@@ -160,12 +160,12 @@ class BaderAnalysis:
         with ScratchDir("."):
             tmpfile = "CHGCAR" if chgcar_filename else "CUBE"
             with zopen(fpath, "rt") as f_in:
-                with open(tmpfile, "wt") as f_out:
+                with open(tmpfile, "w") as f_out:
                     shutil.copyfileobj(f_in, f_out)
             args = [BADEREXE, tmpfile]
             if chgref_filename:
                 with zopen(chgrefpath, "rt") as f_in:
-                    with open("CHGCAR_ref", "wt") as f_out:
+                    with open("CHGCAR_ref", "w") as f_out:
                         shutil.copyfileobj(f_in, f_out)
                 args += ["-ref", "CHGCAR_ref"]
             if parse_atomic_densities:
@@ -327,12 +327,11 @@ class BaderAnalysis:
 
         Note, this assumes that the Bader analysis was correctly performed on a file
         with electron densities
-
         """
         charges = [-self.get_charge(i) for i in range(len(self.structure))]
-        struc = self.structure.copy()
-        struc.add_site_property("charge", charges)
-        return struc
+        struct = self.structure.copy()
+        struct.add_site_property("charge", charges)
+        return struct
 
     def get_oxidation_state_decorated_structure(self, nelects=None):
         """
@@ -343,9 +342,9 @@ class BaderAnalysis:
         with electron densities
         """
         charges = [self.get_partial_charge(i, None if not nelects else nelects[i]) for i in range(len(self.structure))]
-        struc = self.structure.copy()
-        struc.add_oxidation_state_by_site(charges)
-        return struc
+        struct = self.structure.copy()
+        struct.add_oxidation_state_by_site(charges)
+        return struct
 
     def get_decorated_structure(self, property_name, average=False):
         """
@@ -375,20 +374,19 @@ class BaderAnalysis:
             structure with site properties assigned via Bader Analysis
         """
         vals = [self.get_charge(i) for i in range(len(self.structure))]
-        struc = self.structure.copy()
+        struct = self.structure.copy()
         if average:
             vals = np.divide(vals, [d["atomic_vol"] for d in self.data])
-        struc.add_site_property(property_name, vals)
+        struct.add_site_property(property_name, vals)
         if property_name == "spin":
-            struc.add_spin_by_site(vals)
-        return struc
+            struct.add_spin_by_site(vals)
+        return struct
 
     @property
     def summary(self):
         """
         :return: Dict summary of key analysis, e.g., atomic volume, charge, etc.
         """
-
         summary = {
             "min_dist": [d["min_dist"] for d in self.data],
             "charge": [d["charge"] for d in self.data],
@@ -419,7 +417,6 @@ class BaderAnalysis:
                 stored.
             suffix (str): specific suffix to look for (e.g. '.relax1'
                 for 'CHGCAR.relax1.gz').
-
         """
 
         def _get_filepath(filename):

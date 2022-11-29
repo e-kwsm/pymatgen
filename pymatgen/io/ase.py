@@ -147,7 +147,6 @@ class AseAtomsAdaptor:
         Returns:
             Equivalent pymatgen.core.structure.Structure
         """
-
         cls = Structure if cls is None else cls
 
         symbols = atoms.get_chemical_symbols()
@@ -229,6 +228,7 @@ class AseAtomsAdaptor:
                 "numbers",
                 "positions",
                 "magmom",
+                "initial_magmoms",
                 "final_magmom",
                 "charge",
                 "final_charge",
@@ -251,7 +251,6 @@ class AseAtomsAdaptor:
         Returns:
             Equivalent pymatgen.core.structure.Molecule
         """
-
         cls = Molecule if cls is None else cls
         molecule = AseAtomsAdaptor.get_structure(atoms, cls=cls, **cls_kwargs)
         if atoms.has("initial_charges"):

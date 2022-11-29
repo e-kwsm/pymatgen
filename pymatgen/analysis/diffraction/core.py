@@ -11,6 +11,7 @@ import collections
 import numpy as np
 
 from pymatgen.core.spectrum import Spectrum
+from pymatgen.core.structure import Structure
 from pymatgen.util.plotting import add_fig_kwargs
 
 
@@ -55,7 +56,7 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
     SCALED_INTENSITY_TOL = 1e-3
 
     @abc.abstractmethod
-    def get_pattern(self, structure, scaled=True, two_theta_range=(0, 90)):
+    def get_pattern(self, structure: Structure, scaled=True, two_theta_range=(0, 90)):
         """
         Calculates the diffraction pattern for a structure.
 
@@ -92,9 +93,9 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
                 None if you want all diffracted beams within the limiting
                 sphere of radius 2 / wavelength.
             annotate_peaks (str or None): Whether and how to annotate the peaks
-                with hkl indices.  Default is 'compact', i.e. show short
-                version (oriented vertically), e.g. 100.  If 'full', show
-                long version, e.g. (1, 0, 0).  If None, do not show anything.
+                with hkl indices. Default is 'compact', i.e. show short
+                version (oriented vertically), e.g. 100. If 'full', show
+                long version, e.g. (1, 0, 0). If None, do not show anything.
             ax: matplotlib :class:`Axes` or None if a new figure should be
                 created.
             with_labels: True to add xlabels and ylabels to the plot.
@@ -115,10 +116,10 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
         xrd = self.get_pattern(structure, two_theta_range=two_theta_range)
         imax = max(xrd.y)
 
-        for two_theta, i, hkls, d_hkl in zip(xrd.x, xrd.y, xrd.hkls, xrd.d_hkls):
+        for two_theta, i, hkls in zip(xrd.x, xrd.y, xrd.hkls):
             if two_theta_range[0] <= two_theta <= two_theta_range[1]:
                 hkl_tuples = [hkl["hkl"] for hkl in hkls]
-                label = ", ".join([str(hkl_tuple) for hkl_tuple in hkl_tuples])  # 'full' label
+                label = ", ".join(map(str, hkl_tuples))  # 'full' label
                 ax.plot([two_theta, two_theta], [0, i], color="k", linewidth=3, label=label)
 
                 if annotate_peaks == "full":
@@ -130,8 +131,8 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
                     )
                 elif annotate_peaks == "compact":
                     if all(all(i < 10 for i in hkl_tuple) for hkl_tuple in hkl_tuples):
-                        label = ",".join(["".join([str(i) for i in hkl_tuple]) for hkl_tuple in hkl_tuples])
-                        # 'compact' label.  Would be unclear for indices >= 10
+                        label = ",".join(["".join(map(str, hkl_tuple)) for hkl_tuple in hkl_tuples])
+                        # 'compact' label. Would be unclear for indices >= 10
                         # It would have more than 3 figures, e.g. 1031
 
                     if i / imax > 0.5:  # Big peak: annotation on the side
@@ -163,7 +164,7 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
 
         return plt
 
-    def show_plot(self, structure, **kwargs):
+    def show_plot(self, structure: Structure, **kwargs):
         """
         Shows the diffraction plot.
 
@@ -174,9 +175,9 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
                 None if you want all diffracted beams within the limiting
                 sphere of radius 2 / wavelength.
             annotate_peaks (str or None): Whether and how to annotate the peaks
-                with hkl indices.  Default is 'compact', i.e. show short
-                version (oriented vertically), e.g. 100.  If 'full', show
-                long version, e.g. (1, 0, 0).  If None, do not show anything.
+                with hkl indices. Default is 'compact', i.e. show short
+                version (oriented vertically), e.g. 100. If 'full', show
+                long version, e.g. (1, 0, 0). If None, do not show anything.
         """
         self.get_plot(structure, **kwargs).show()
 
@@ -192,9 +193,9 @@ class AbstractDiffractionPatternCalculator(abc.ABC):
                 None if you want all diffracted beams within the limiting
                 sphere of radius 2 / wavelength.
             annotate_peaks (str or None): Whether and how to annotate the peaks
-                with hkl indices.  Default is 'compact', i.e. show short
-                version (oriented vertically), e.g. 100.  If 'full', show
-                long version, e.g. (1, 0, 0).  If None, do not show anything.
+                with hkl indices. Default is 'compact', i.e. show short
+                version (oriented vertically), e.g. 100. If 'full', show
+                long version, e.g. (1, 0, 0). If None, do not show anything.
             fontsize: (int) fontsize for peak labels.
         """
         import matplotlib.pyplot as plt
@@ -221,7 +222,6 @@ def get_unique_families(hkls):
     Returns:
         {hkl: multiplicity}: A dict with unique hkl and multiplicity.
     """
-
     # TODO: Definitely can be sped up.
     def is_perm(hkl1, hkl2):
         h1 = np.abs(hkl1)
@@ -240,7 +240,7 @@ def get_unique_families(hkls):
             unique[hkl1].append(hkl1)
 
     pretty_unique = {}
-    for k, v in unique.items():
+    for v in unique.values():
         pretty_unique[sorted(v)[-1]] = len(v)
 
     return pretty_unique
