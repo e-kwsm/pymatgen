@@ -1,6 +1,8 @@
 # Copyright (c) Pymatgen Development Team.
 # Distributed under the terms of the MIT License.
 
+from __future__ import annotations
+
 import collections
 import os
 import unittest
@@ -270,12 +272,10 @@ class PhaseDiagramTest(unittest.TestCase):
                 assert e_ah >= 0
 
     def test_get_decomp_and_e_above_hull_on_error(self):
-
         for method, expected in (
             (self.pd.get_e_above_hull, None),
             (self.pd.get_decomp_and_e_above_hull, (None, None)),
         ):
-
             # test raises ValueError on entry with element not in the phase diagram
             U_entry = PDEntry("U", 0)
             with pytest.raises(ValueError, match="Unable to get decomposition for PDEntry : U1 with energy"):
@@ -618,6 +618,21 @@ class PhaseDiagramTest(unittest.TestCase):
         with ScratchDir("."):
             dumpfn(self.pd, "pd.json")
             loadfn("pd.json")
+
+    def test_el_refs(self):
+        # Create an imitation of pre_computed phase diagram with el_refs keys being
+        # tuple[str, PDEntry] instead of tuple[Element, PDEntry].
+        mock_el_refs = [(str(el), entry) for el, entry in self.pd.el_refs.items()]
+        mock_computed_data = {**self.pd.computed_data, "el_refs": mock_el_refs}
+        pd = PhaseDiagram(self.entries, computed_data=mock_computed_data)
+        # Check the keys in el_refs dict have been updated to Element object via PhaseDiagram class.
+        assert all(isinstance(el, Element) for el in pd.el_refs)
+
+    def test_val_err_on_no_entries(self):
+        # check that PhaseDiagram raises ValueError when building phase diagram with no entries
+        for entries in [None, [], set(), tuple()]:
+            with pytest.raises(ValueError, match="Unable to build phase diagram without entries."):
+                PhaseDiagram(entries=entries)
 
 
 class GrandPotentialPhaseDiagramTest(unittest.TestCase):

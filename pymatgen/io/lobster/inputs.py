@@ -96,6 +96,7 @@ class Lobsterin(dict, MSONable):
         "forceEnergyRange",
         "bandwiseSpilling",
         "kpointwiseSpilling",
+        "LSODOS",
     ]
     # several of these keywords + ending can be used in a lobsterin file:
     LISTKEYWORDS = ["basisfunctions", "cohpbetween", "createFatband"]
@@ -175,7 +176,6 @@ class Lobsterin(dict, MSONable):
 
                 if isinstance(v1, str):
                     if v1.strip().lower() != other[new_key].strip().lower():
-
                         different_param[k1.upper()] = {
                             "lobsterin1": v1,
                             "lobsterin2": other[new_key],

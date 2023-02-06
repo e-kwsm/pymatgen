@@ -9,10 +9,8 @@ import sys
 import numpy
 from setuptools import Extension, find_namespace_packages, setup
 
-extra_link_args: list[str] = []
-if sys.platform.startswith("win") and platform.machine().endswith("64"):
-    extra_link_args = ["-Wl,--allow-multiple-definition"]
-
+is_win_64 = sys.platform.startswith("win") and platform.machine().endswith("64")
+extra_link_args = ["-Wl,--allow-multiple-definition"] if is_win_64 else []
 
 setup(
     name="pymatgen",
@@ -20,7 +18,7 @@ setup(
         include=["pymatgen.*", "pymatgen.analysis.*", "pymatgen.io.*", "pymatgen.ext.*", "cmd_line"],
         exclude=["pymatgen.*.tests", "pymatgen.*.*.tests", "pymatgen.*.*.*.tests"],
     ),
-    version="2022.11.7",
+    version="2023.1.30",
     python_requires=">=3.8",
     install_requires=[
         "matplotlib>=1.5",
@@ -51,7 +49,7 @@ setup(
             "coverage",
             "coveralls",
             "flake8",
-            "mypy==0.991",  # pinned due to long list of errors starting with mypy 0.990
+            "mypy",
             "pre-commit",
             "pydocstyle",
             "pylint",
@@ -114,6 +112,11 @@ setup(
     maintainer_email="ongsp@eng.ucsd.edu, mkhorton@lbl.gov, janosh.riebesell@gmail.com",
     url="https://pymatgen.org",
     license="MIT",
+    project_urls={
+        "Docs": "https://pymatgen.org",
+        "Package": "https://pypi.org/project/pymatgen",
+        "Repo": "https://github.com/materialsproject/pymatgen",
+    },
     description="Python Materials Genomics is a robust materials "
     "analysis code that defines core object representations for "
     "structures and molecules with support for many electronic "
@@ -143,9 +146,9 @@ setup(
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3",
         "Topic :: Scientific/Engineering :: Chemistry",
         "Topic :: Scientific/Engineering :: Information Analysis",
