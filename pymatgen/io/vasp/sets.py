@@ -1930,7 +1930,6 @@ class MPNMRSet(MPStaticSet):
                 }
             )
         elif self.mode.lower() == "efg":
-
             isotopes = {ist.split("-")[0]: ist for ist in self.isotopes}
 
             quad_efg = [
@@ -3056,7 +3055,7 @@ def get_valid_magmom_struct(structure, inplace=True, spin_mode="auto"):
             - none: Remove all the magmom information
 
     Returns:
-        New structure if inplace == False
+        New structure if inplace is False
     """
     default_values = {"s": 1.0, "v": [1.0, 1.0, 1.0], "n": None}
     if spin_mode[0].lower() == "a":

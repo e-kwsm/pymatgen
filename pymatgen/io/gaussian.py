@@ -5,6 +5,8 @@
 This module implements input and output processing from Gaussian.
 """
 
+from __future__ import annotations
+
 import re
 import warnings
 from typing import Optional
@@ -422,7 +424,7 @@ class GaussianInput:
 
         outs = []
         for site in self._mol:
-            outs.append(" ".join([site.species_string, " ".join([to_s(j) for j in site.coords])]))
+            outs.append(" ".join(site.species_string, " ".join([to_s(j) for j in site.coords])))
         return "\n".join(outs)
 
     def __str__(self):
@@ -862,7 +864,6 @@ class GaussianOutput:
                         self.spin_multiplicity = int(m.group(2))
                         parse_stage = 2
                 elif parse_stage == 2:
-
                     if self.is_pcm:
                         self._check_pcm(line)
 
@@ -1145,7 +1146,7 @@ class GaussianOutput:
                             if line == "\n":
                                 break
                         resume.append(line)
-                        resume = "".join([r.strip() for r in resume])
+                        resume = "".join(r.strip() for r in resume)
                         self.resumes.append(resume)
                     elif bond_order_patt.search(line):
                         parse_bond_order = True
