@@ -1444,12 +1444,12 @@ class CifWriter:
         lattice = struct.lattice
         comp = struct.composition
         no_oxi_comp = comp.element_composition
-        block["_symmetry_space_group_name_H-M"] = spacegroup[0]
+        block["_space_group_IT_number"] = spacegroup[1]
+        block["_space_group_name_H-M_alt"] = spacegroup[0]
         for cell_attr in ["a", "b", "c"]:
             block["_cell_length_" + cell_attr] = format_str.format(getattr(lattice, cell_attr))
         for cell_attr in ["alpha", "beta", "gamma"]:
             block["_cell_angle_" + cell_attr] = format_str.format(getattr(lattice, cell_attr))
-        block["_symmetry_Int_Tables_number"] = spacegroup[1]
         block["_chemical_formula_structural"] = no_oxi_comp.reduced_formula
         block["_chemical_formula_sum"] = no_oxi_comp.formula
         block["_cell_volume"] = format_str.format(lattice.volume)
@@ -1458,8 +1458,8 @@ class CifWriter:
         block["_cell_formula_units_Z"] = str(int(fu))
 
         if symprec is None:
-            block["_symmetry_equiv_pos_site_id"] = ["1"]
-            block["_symmetry_equiv_pos_as_xyz"] = ["x, y, z"]
+            block["_space_group_symop_id"] = ["1"]
+            block["_space_group_symop_operation_xyz"] = ["x, y, z"]
         else:
             spg_analyzer = SpacegroupAnalyzer(struct, symprec)
 
@@ -1469,7 +1469,7 @@ class CifWriter:
                 symm_ops.append(SymmOp.from_rotation_and_translation(op.rotation_matrix, v))
 
             ops = [op.as_xyz_str() for op in symm_ops]
-            block["_symmetry_equiv_pos_site_id"] = [f"{i}" for i in range(1, len(ops) + 1)]
+            block["_space_group_symop_id"] = [f"{i}" for i in range(1, len(ops) + 1)]
             block["_symmetry_equiv_pos_as_xyz"] = ops
 
         loops.append(["_symmetry_equiv_pos_site_id", "_symmetry_equiv_pos_as_xyz"])
@@ -1483,7 +1483,7 @@ class CifWriter:
             symbol_to_oxi_num = {el.symbol: 0 for el in sorted(comp.elements)}
 
         atom_site_type_symbol = []
-        atom_site_symmetry_multiplicity = []
+        atom_site_site_symmetry_multiplicity = []
         atom_site_fract_x = []
         atom_site_fract_y = []
         atom_site_fract_z = []
@@ -1499,7 +1499,7 @@ class CifWriter:
             for site in struct:
                 for sp, occu in sorted(site.species.items()):
                     atom_site_type_symbol.append(str(sp))
-                    atom_site_symmetry_multiplicity.append("1")
+                    atom_site_site_symmetry_multiplicity.append("1")
                     atom_site_fract_x.append(format_str.format(site.a))
                     atom_site_fract_y.append(format_str.format(site.b))
                     atom_site_fract_z.append(format_str.format(site.c))
@@ -1551,7 +1551,7 @@ class CifWriter:
             ):
                 for sp, occu in site.species.items():
                     atom_site_type_symbol.append(str(sp))
-                    atom_site_symmetry_multiplicity.append(f"{mult}")
+                    atom_site_site_symmetry_multiplicity.append(f"{mult}")
                     atom_site_fract_x.append(format_str.format(site.a))
                     atom_site_fract_y.append(format_str.format(site.b))
                     atom_site_fract_z.append(format_str.format(site.c))
@@ -1562,7 +1562,7 @@ class CifWriter:
 
         block["_atom_site_type_symbol"] = atom_site_type_symbol
         block["_atom_site_label"] = atom_site_label
-        block["_atom_site_symmetry_multiplicity"] = atom_site_symmetry_multiplicity
+        block["_atom_site_site_symmetry_multiplicity"] = atom_site_site_symmetry_multiplicity
         block["_atom_site_fract_x"] = atom_site_fract_x
         block["_atom_site_fract_y"] = atom_site_fract_y
         block["_atom_site_fract_z"] = atom_site_fract_z
@@ -1570,7 +1570,7 @@ class CifWriter:
         loop_labels = [
             "_atom_site_type_symbol",
             "_atom_site_label",
-            "_atom_site_symmetry_multiplicity",
+            "_atom_site_site_symmetry_multiplicity",
             "_atom_site_fract_x",
             "_atom_site_fract_y",
             "_atom_site_fract_z",
