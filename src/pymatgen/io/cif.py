@@ -1622,7 +1622,7 @@ class CifWriter:
             symbol_to_oxi_num = {el.symbol: 0 for el in sorted(comp.elements)}
 
         atom_site_type_symbol = []
-        atom_site_symmetry_multiplicity = []
+        atom_site_site_symmetry_multiplicity = []
         atom_site_fract_x = []
         atom_site_fract_y = []
         atom_site_fract_z = []
@@ -1638,7 +1638,7 @@ class CifWriter:
             for site in struct:
                 for sp, occu in sorted(site.species.items()):
                     atom_site_type_symbol.append(str(sp))
-                    atom_site_symmetry_multiplicity.append("1")
+                    atom_site_site_symmetry_multiplicity.append("1")
                     atom_site_fract_x.append(format_str.format(site.a))
                     atom_site_fract_y.append(format_str.format(site.b))
                     atom_site_fract_z.append(format_str.format(site.c))
@@ -1691,7 +1691,7 @@ class CifWriter:
             ):
                 for sp, occu in site.species.items():
                     atom_site_type_symbol.append(str(sp))
-                    atom_site_symmetry_multiplicity.append(f"{mult}")
+                    atom_site_site_symmetry_multiplicity.append(f"{mult}")
                     atom_site_fract_x.append(format_str.format(site.a))
                     atom_site_fract_y.append(format_str.format(site.b))
                     atom_site_fract_z.append(format_str.format(site.c))
@@ -1718,7 +1718,7 @@ class CifWriter:
         loop_labels = [
             "_atom_site_type_symbol",
             "_atom_site_label",
-            "_atom_site_symmetry_multiplicity",
+            "_atom_site_site_symmetry_multiplicity",
             "_atom_site_fract_x",
             "_atom_site_fract_y",
             "_atom_site_fract_z",
