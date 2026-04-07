@@ -35,3 +35,12 @@ ENV/
 env.bak/
 venv.bak/
 .pdm-python
+# Sphinx-generated API docs (built in CI, not committed)
+docs/pymatgen*.html
+docs/modules.html
+docs/_modules/
+docs/objects.inv
+docs/searchindex.js
+docs/html/
+docs/doctrees/
+docs/apidoc/*.rst
