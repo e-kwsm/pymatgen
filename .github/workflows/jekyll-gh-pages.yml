@@ -34,7 +34,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install pymatgen with docs dependencies
-        run: pip install -e ".[docs]"
+        run: |
+          pip install -e ".[docs]"
+          pip install sphinx sphinx-rtd-theme sphinx-copybutton
 
       - name: Generate Sphinx API docs
         working-directory: docs
