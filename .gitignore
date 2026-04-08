@@ -44,3 +44,4 @@ docs/searchindex.js
 docs/html/
 docs/doctrees/
 docs/apidoc/*.rst
+docs/.apidoc_merge/
